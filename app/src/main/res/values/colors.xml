@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="base_color">#6CBAD8</color>
+    <color name="sub_color1">#1F91BE</color>
+    <color name="sub_color2">#6CBAD8</color>
+    <color name="sub_color3">#CAE7F2</color>
+    <color name="sub_color4">#1DAF9E</color>
+    <color name="sub_color5">#68CFC3</color>
+    <color name="sub_color6">#C8EFEA</color>
+</resources>
