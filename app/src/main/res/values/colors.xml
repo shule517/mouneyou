@@ -7,4 +7,6 @@
     <color name="sub_color4">#1DAF9E</color>
     <color name="sub_color5">#68CFC3</color>
     <color name="sub_color6">#C8EFEA</color>
+    <color name="start_color">#1DAF9E</color>
+    <color name="end_color">#1DAF9E</color>
 </resources>

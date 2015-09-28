@@ -1,8 +1,24 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
+    </style>
+
+    <style name="AppTheme.ActionBarStyle" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="titleTextStyle">@style/ActionBarTitleStyle</item>
+        <item name="subtitleTextStyle">@style/ActionBarSubitleStyle</item>
+        <item name="background">@drawable/gradation</item>
+        <item name="backgroundStacked">@android:color/white</item>
+    </style>
+
+    <style name="ActionBarTitleStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ActionBarSubitleStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
+        <item name="android:typeface">monospace</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>
