@@ -76,20 +76,20 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
                 // access token is already available, or consumer key/secret is not set.
                 if (!twitter.getAuthorization().isEnabled()) {
                     System.out.println("OAuth consumer key/secret is not set.");
-                    System.exit(-1);
+                    //System.exit(-1);
                 }
             }
             twitter4j.Status status = twitter.updateStatus(text);
             System.out.println("Successfully updated the status to [" + status.getText() + "].");
-            System.exit(0);
+            //System.exit(0);
         } catch (TwitterException te) {
             te.printStackTrace();
             System.out.println("Failed to get timeline: " + te.getMessage());
-            System.exit(-1);
+            //System.exit(-1);
         } catch (IOException ioe) {
             ioe.printStackTrace();
             System.out.println("Failed to read the system input.");
-            System.exit(-1);
+            //System.exit(-1);
         }
     }
 
@@ -98,9 +98,8 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
         tweet();
         return true;
     }
-/*
+
     @Override
-    protected void onPostExecute(Bitmap result) {
+    protected void onPostExecute(Boolean result) {
     }
-*/
 }

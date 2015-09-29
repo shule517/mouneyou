@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
     </style>
 
@@ -12,7 +12,7 @@
     </style>
 
     <style name="ActionBarTitleStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textStyle"></item>
         <item name="android:textColor">@color/actionbar_text</item>
     </style>
 
@@ -20,5 +20,6 @@
         <item name="android:typeface">monospace</item>
         <item name="android:textColor">@color/actionbar_text</item>
     </style>
+
 
 </resources>

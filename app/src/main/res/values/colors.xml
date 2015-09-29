@@ -8,8 +8,8 @@
     <color name="sub_color5">#68CFC3</color>
     <color name="sub_color6">#C8EFEA</color>
 
-    <color name="grid_background">#CAE7F2</color>
-    <color name="actionBar_background">@android:color/white</color>
+    <color name="actionBar_background">#208DC3</color>
+    <color name="grid_background">#EEEEEE</color>
 
-    <color name="actionbar_text">#66757F</color>
+    <color name="actionbar_text">#FFFFFF</color>
 </resources>
