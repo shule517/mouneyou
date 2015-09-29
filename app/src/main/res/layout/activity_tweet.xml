@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stamp"
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true"
+        android:maxWidth="300dp"
+        android:minHeight="300dp"
+        android:clickable="true"
+        android:src="@drawable/sta" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tweetEditText"
+        android:layout_weight="0.10"
+        android:hint="ぷぇー"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:autoText="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ツイートする。"
+        android:id="@+id/tweetButton"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/custom_button"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
