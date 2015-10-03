@@ -1,6 +1,15 @@
 package shule517.mouneyou;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,9 +30,13 @@ public
 class TweetTask extends AsyncTask<String, Void, Boolean> {
 
     String text;
+    Activity context;
+    Bitmap bitmap;
 
-    TweetTask(String text) {
+    TweetTask(String text, Activity context, Bitmap bitmap) {
         this.text = text;
+        this.context = context;
+        this.bitmap = bitmap;
     }
 
     private void tweet() {
@@ -101,5 +114,27 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
+        /*
+        ImageView imageView = new ImageView(this.context);
+        imageView.setImageBitmap(bitmap);
+        */
+
+        LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.activity_tweeted, null);
+
+        // スタンプ画像を設定
+        ImageView stampImage = (ImageView) view.findViewById(R.id.stampImage);
+        stampImage.setImageBitmap(this.bitmap);
+
+        // ツイート内容を設定
+        TextView tweetText = (TextView) view.findViewById(R.id.tweetText);
+        tweetText.setText(this.text);
+        Log.i("Tweet内容", this.text);
+
+        // Toastを表示
+        Toast toast = new Toast(this.context);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
     }
 }

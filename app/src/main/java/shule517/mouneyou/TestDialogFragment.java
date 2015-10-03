@@ -66,7 +66,7 @@ public class TestDialogFragment extends DialogFragment implements View.OnClickLi
             comment += "\n";
         }
         String text = String.format("%s%s #てゆうかもう寝よう #すたンプ", comment, stampImage.getSrcUrl());
-        TweetTask task = new TweetTask(text);
+        TweetTask task = new TweetTask(text, getActivity(), this.stampImage.getBitmap());
         task.execute();
 
         /*
