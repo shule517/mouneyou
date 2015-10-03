@@ -38,16 +38,8 @@ public class ImageArrayAdapter extends ArrayAdapter<ListItem> {
 
         ListItem item = this.items.get(position);
 
-        // テキストをセット
-        /*
-        TextView appInfoText = (TextView)view.findViewById(R.id.item_text);
-        appInfoText.setImageUrl(stampImage.getImageUrl());
-        */
-        String imageUrl = item.getImageUrl();
-        String str = String.format("test : %s", imageUrl);
-        //Log.d("tag", str);
-
         // アイコンをセット
+        String imageUrl = item.getImageUrl();
         ImageView image = (ImageView) view.findViewById(R.id.item_image);
         if (item.getBitmap() == null) {
             // Bitmapを取得
@@ -55,7 +47,7 @@ public class ImageArrayAdapter extends ArrayAdapter<ListItem> {
             image.setTag(imageUrl);
 
             // 画像取得スレッド起動
-            ImageGetTask task = new ImageGetTask(image, item);
+            ImageGetTask task = new ImageGetTask(view.getContext(), image, item);
             task.execute(imageUrl);
         } else {
             // 取得済みのBitmapを設定

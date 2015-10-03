@@ -1,11 +1,14 @@
 package shule517.mouneyou;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -18,36 +21,57 @@ class ImageGetTask extends AsyncTask<String, Void, Bitmap> {
     private ImageView image;
     private String imageUrl;
     private ListItem item;
+    private Context context;
 
-    public ImageGetTask(ImageView _image, ListItem _item) {
-        image = _image;
-        imageUrl = _image.getTag().toString();
-        item = _item;
+    public ImageGetTask(Context context, ImageView image, ListItem item) {
+        this.context = context;
+        this.image = image;
+        this.imageUrl = image.getTag().toString();
+        this.item = item;
     }
 
     @Override
     protected Bitmap doInBackground(String... params) {
-        // ここでHttp経由で画像を取得します。取得後Bitmapで返します。
-
         Bitmap image = null;
         BitmapFactory.Options options;
         String imageUrl = params[0];
+
         try {
-            // インターネット上の画像を取得して、Bitmap に変換
+            // アプリ内に画像が保存されているかチェック
+            InputStream input = null;
+            try {
+                input = this.context.openFileInput(imageUrl.replace("/", ""));
+                Bitmap bitmapImage = BitmapFactory.decodeStream(input);
+                return bitmapImage;
+            } catch (Exception e) {
+                Log.e("画像取得", e.getMessage());
+            }
+
+            // スタンプ画像をdownload
             URL url = new URL(imageUrl);
             options = new BitmapFactory.Options();
-            Log.i("画像取得", "imageUrl:" + imageUrl);
-
-            // 実際に読み込む
             options.inJustDecodeBounds = false;
             InputStream is = (InputStream) url.getContent();
             image = BitmapFactory.decodeStream(is, null, options);
             is.close();
+
+            // 画像を保存
+            FileOutputStream out = null;
+            try {
+                out = this.context.openFileOutput(imageUrl.replace("/", ""), Context.MODE_PRIVATE);
+                image.compress(Bitmap.CompressFormat.PNG, 100, out);
+            } catch (FileNotFoundException e) {
+                Log.e("画像取得", e.getMessage());
+            } finally {
+                if (out != null) {
+                    out.close();
+                    out = null;
+                }
+            }
         } catch (Exception e) {
-            Log.i("button", e.getMessage());
+            Log.e("画像取得", e.getMessage());
         }
 
-        Log.i("画像取得", "OK url:" + imageUrl);
         return image;
     }
 
