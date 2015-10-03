@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- 背景色 -->
-    <solid android:color="@android:color/white" />
+    <solid android:color="@color/button_press" />
 
     <!-- 角丸 (14dpで設定) -->
     <corners android:radius="14dp" />
