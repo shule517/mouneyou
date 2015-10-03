@@ -6,10 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -17,15 +20,71 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
+import twitter4j.TwitterException;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.OAuthAuthorization;
+import twitter4j.auth.RequestToken;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationContext;
+
 public class MainActivity extends AppCompatActivity {
 
     private GridView gridView;
     List<ListItem> list;
 
+    public static RequestToken _req = null;
+    public static OAuthAuthorization _oauth = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+
+        // Twitter認証
+        AsyncTask<Context, Void, Boolean> task = new AsyncTask<Context, Void, Boolean>() {
+            Context context;
+
+            @Override
+            protected Boolean doInBackground(Context... params) {
+                try {
+                    //Twitetr4Jの設定を読み込む
+                    Configuration conf = ConfigurationContext.getInstance();
+
+                    //Oauth認証オブジェクト作成
+                    _oauth = new OAuthAuthorization(conf);
+                    //Oauth認証オブジェクトにconsumerKeyとconsumerSecretを設定
+                    _oauth.setOAuthConsumer("wgrDtnR6zi3sv2d6m6k3C9olS", "mZGlg1tOgElsoX4Ge7ymZzGlMaj2IRG8l3pWsxGQYVU0ECYKAZ");
+
+                    // Tokenの取得
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(params[0]);
+                    String token = sp.getString("Token", "");
+                    String tokenSecret = sp.getString("TokenSecret", "");
+
+                    if (token.length() > 0 && tokenSecret.length() > 0) {
+                        _oauth.setOAuthAccessToken(new AccessToken(token, tokenSecret));
+                    } else {
+                        //アプリの認証オブジェクト作成
+                        try {
+                            _req = _oauth.getOAuthRequestToken("mouneyou://oauth");
+                        } catch (TwitterException e) {
+                            e.printStackTrace();
+                        }
+                        String _uri;
+                        _uri = _req.getAuthorizationURL();
+                        startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse(_uri)), 0);
+                    }
+                } catch (Exception ex) {
+                    Log.e("twitter", ex.toString());
+                }
+
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+            }
+        };
+        task.execute(this);
 
         list = new ArrayList<ListItem>();
 
@@ -218,8 +277,7 @@ public class MainActivity extends AppCompatActivity {
         manager.notify(0, notification);
 
         // adapterのインスタンスを作成
-        ImageArrayAdapter adapter =
-                new ImageArrayAdapter(this, R.layout.list_view_image_item, list);
+        ImageArrayAdapter adapter = new ImageArrayAdapter(this, R.layout.list_view_image_item, list);
 
         gridView = (GridView) findViewById(R.id.listview);
         gridView.setAdapter(adapter);
@@ -235,13 +293,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem target = menu.add(0,0,0,"1");
+        menu.add(0,1,0,"2");
+        target.setIcon(R.drawable.sta);
+
+        return true;
+    }
+    */
+
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -256,4 +330,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    */
 }
