@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -93,12 +94,89 @@ public class MainActivity extends AppCompatActivity {
 
         list = new ArrayList<ListItem>();
 
-        String[][] stringList =
-        {
-            {
-                    "/images/stamp/stamp001.png",
-                    "http://pic.twitter.com/zJf9UxVkCy"
-            }, {
+        String[][] stringList = loadStampSettings();
+
+        for (String[] str : stringList) {
+            ListItem item = new ListItem();
+            item.setImageUrl(str[0]);
+            item.setSrcUrl(str[1]);
+            item.setImageId(R.drawable.sta);
+            list.add(item);
+        }
+
+        NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this.getBaseContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this.getBaseContext(), 0, intent, 0);
+
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle("てゆうかツイートしよう。")
+                .setSmallIcon(R.drawable.sta)
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .build();
+        manager.notify(0, notification);
+
+        // スタンプ一覧Gridの設定
+        gridView = (DynamicGridView) findViewById(R.id.listview);
+        adapter = new StampDynamicAdapter(this, list, 4);
+        gridView.setAdapter(adapter);
+
+        // スタンプ長押しで並び替え
+        gridView.setOnDragListener(new DynamicGridView.OnDragListener() {
+            @Override
+            public void onDragStarted(int position) {
+                Log.d("GridView", "drag started at position " + position);
+            }
+
+            @Override
+            public void onDragPositionsChanged(int oldPosition, int newPosition) {
+                Log.d("GridView", String.format("drag item position changed from %d to %d", oldPosition, newPosition));
+            }
+        });
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                gridView.startEditMode(position);
+                return true;
+            }
+        });
+
+        // スタンプタップでツイート画面を表示
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListItem item = (ListItem) adapter.getItem(position);
+                DialogFragment newFragment = new TestDialogFragment(item, twitter, adapter, position);
+                newFragment.show(getFragmentManager(), "");
+            }
+        });
+    }
+
+    @NonNull
+    private String[][] loadStampSettings() {
+
+        // Tokenの取得
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        int stampCount = sp.getInt("stamp_count", 0);
+
+        if (stampCount != 0) {
+            String[][] list = new String[stampCount][2];
+            for (int i = 0; i < stampCount; i++) {
+                String imageUrl = sp.getString("stamp" + i + "_imageurl", "");
+                String srcUrl = sp.getString("stamp" + i + "_srcurl", "");
+                String[] item = {imageUrl, srcUrl};
+                list[i] = item;
+            }
+            return list;
+        } else {
+
+            String[][] list = new String[][]{
+                    {
+                            "/images/stamp/stamp001.png",
+                            "http://pic.twitter.com/zJf9UxVkCy"
+                    }, {
                     "/images/stamp/stamp002.png",
                     "http://pic.twitter.com/gGWnG2T1N2"
             }, {
@@ -258,69 +336,31 @@ public class MainActivity extends AppCompatActivity {
                     "/images/stamp/stamp054.png",
                     "http://pic.twitter.com/a1O9gQjnx6"
             }
-        };
+            };
 
-        for (String[] str : stringList) {
-            ListItem item = new ListItem();
-            item.setImageUrl("http://mouneyou.rgx6.com" + str[0]);
-            item.setSrcUrl(str[1]);
-            item.setImageId(R.drawable.sta);
-            list.add(item);
+            for (String[] item : list) {
+                item[0] = "http://mouneyou.rgx6.com/" + item[0];
+            }
+            return list;
         }
-
-        NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Intent intent = new Intent(this.getBaseContext(), MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this.getBaseContext(), 0, intent, 0);
-
-        Notification notification = new Notification.Builder(this)
-                .setContentTitle("てゆうかツイートしよう。")
-                .setSmallIcon(R.drawable.sta)
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-                .build();
-        manager.notify(0, notification);
-
-        // スタンプ一覧Gridの設定
-        gridView = (DynamicGridView) findViewById(R.id.listview);
-        adapter = new StampDynamicAdapter(this, list, 4);
-        gridView.setAdapter(adapter);
-
-        // スタンプ長押しで並び替え
-        gridView.setOnDragListener(new DynamicGridView.OnDragListener() {
-            @Override
-            public void onDragStarted(int position) {
-                Log.d("GridView", "drag started at position " + position);
-            }
-
-            @Override
-            public void onDragPositionsChanged(int oldPosition, int newPosition) {
-                Log.d("GridView", String.format("drag item position changed from %d to %d", oldPosition, newPosition));
-            }
-        });
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                gridView.startEditMode(position);
-                return true;
-            }
-        });
-
-        // スタンプタップでツイート画面を表示
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ListItem item = (ListItem) adapter.getItem(position);
-                DialogFragment newFragment = new TestDialogFragment(item, twitter, adapter, position);
-                newFragment.show(getFragmentManager(), "");
-            }
-        });
     }
 
     @Override
     public void onBackPressed() {
         if (gridView.isEditMode()) {
             gridView.stopEditMode();
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sp.edit();
+
+            // スタンプ数の保存
+            editor.putInt("stamp_count", adapter.getCount());
+            // 画像URLの保存
+            for (int i = 0; i < adapter.getCount(); i++) {
+                ListItem item = (ListItem) adapter.getItem(i);
+                editor.putString("stamp" + i + "_imageurl", item.getImageUrl());
+                editor.putString("stamp" + i + "_srcurl", item.getSrcUrl());
+            }
+            editor.commit();
         } else {
             super.onBackPressed();
         }
