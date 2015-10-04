@@ -174,172 +174,172 @@ public class MainActivity extends AppCompatActivity {
 
             String[][] list = new String[][]{
                     {
-                            "/images/stamp/stamp001.png",
+                            "stamp001",
                             "http://pic.twitter.com/zJf9UxVkCy"
                     }, {
-                    "/images/stamp/stamp002.png",
+                    "stamp002",
                     "http://pic.twitter.com/gGWnG2T1N2"
             }, {
-                    "/images/stamp/stamp003.png",
+                    "stamp003",
                     "http://pic.twitter.com/8dnYyZqEoF"
             }, {
-                    "/images/stamp/stamp004.png",
+                    "stamp004",
                     "http://pic.twitter.com/zjx4PUhbmY"
             }, {
-                    "/images/stamp/stamp005.png",
+                    "stamp005",
                     "http://pic.twitter.com/kHnGxG95CI"
             }, {
-                    "/images/stamp/stamp006.png",
+                    "stamp006",
                     "http://pic.twitter.com/SbRtVCDOit"
             }, {
-                    "/images/stamp/stamp007.png",
+                    "stamp007",
                     "http://pic.twitter.com/zIdqC5MtxE"
             }, {
-                    "/images/stamp/stamp008.png",
+                    "stamp008",
                     "http://pic.twitter.com/yYZEcqQCGZ"
             }, {
-                    "/images/stamp/stamp009.png",
+                    "stamp009",
                     "http://pic.twitter.com/dYwZ3axpKW"
             }, {
-                    "/images/stamp/stamp010.png",
+                    "stamp010",
                     "http://pic.twitter.com/Z0yAX0QcHJ",
             }, {
-                    "/images/stamp/stamp011.png",
+                    "stamp011",
                     "http://pic.twitter.com/M6I6regjKd",
             }, {
-                    "/images/stamp/stamp012.png",
+                    "stamp012",
                     "http://pic.twitter.com/Iv8gvPUATM"
             }, {
-                    "/images/stamp/stamp013.png",
+                    "stamp013",
                     "http://pic.twitter.com/sQOagjwDRJ"
             }, {
-                    "/images/stamp/stamp014.png",
+                    "stamp014",
                     "http://pic.twitter.com/1iWz6NfP9t"
             }, {
-                    "/images/stamp/stamp015.png",
+                    "stamp015",
                     "http://pic.twitter.com/tyXVCqpQTc"
             }, {
-                    "/images/stamp/stamp016.png",
+                    "stamp016",
                     "http://pic.twitter.com/e1CILuyhgc"
             }, {
-                    "/images/stamp/stamp017.png",
+                    "stamp017",
                     "http://pic.twitter.com/jmUVSC3zXK"
             }, {
-                    "/images/stamp/stamp018.png",
+                    "stamp018",
                     "http://pic.twitter.com/2pd753IzXC"
             }, {
-                    "/images/stamp/stamp019.png",
+                    "stamp019",
                     "http://pic.twitter.com/e1B9k2MXgS"
             }, {
-                    "/images/stamp/stamp020.png",
+                    "stamp020",
                     "http://pic.twitter.com/wGwLC41tdH"
             }, {
-                    "/images/stamp/stamp021.png",
+                    "stamp021",
                     "http://pic.twitter.com/SYkLTqipqL"
             }, {
-                    "/images/stamp/stamp022.png",
+                    "stamp022",
                     "http://pic.twitter.com/wb79W80JeH"
             }, {
-                    "/images/stamp/stamp023.png",
+                    "stamp023",
                     "http://pic.twitter.com/YYwHReTUBS",
             }, {
-                    "/images/stamp/stamp024.png",
+                    "stamp024",
                     "http://pic.twitter.com/VnmJEufqY2"
             }, {
-                    "/images/stamp/stamp025.png",
+                    "stamp025",
                     "http://pic.twitter.com/6viZHnOBEn"
             }, {
-                    "/images/stamp/stamp026.png",
+                    "stamp026",
                     "http://pic.twitter.com/MMDWi2jWHB"
             }, {
-                    "/images/stamp/stamp027.png",
+                    "stamp027",
                     "http://pic.twitter.com/kDzFQfo6ty"
             }, {
-                    "/images/stamp/stamp028.png",
+                    "stamp028",
                     "http://pic.twitter.com/cuWqlvgib3"
             }, {
-                    "/images/stamp/stamp029.png",
+                    "stamp029",
                     "http://pic.twitter.com/RQdFyGXkcv"
             }, {
-                    "/images/stamp/stamp030.png",
+                    "stamp030",
                     "http://pic.twitter.com/4xZ45MTCNv"
             }, {
-                    "/images/stamp/stamp031.png",
+                    "stamp031",
                     "http://pic.twitter.com/M1zjqfk8pH"
             }, {
-                    "/images/stamp/stamp032.png",
+                    "stamp032",
                     "http://pic.twitter.com/agDkVgLd3n"
             }, {
-                    "/images/stamp/stamp033.png",
+                    "stamp033",
                     "http://pic.twitter.com/3wfkhxsCH1",
             }, {
-                    "/images/stamp/stamp034.png",
+                    "stamp034",
                     "http://pic.twitter.com/29RqnztSk9"
             }, {
-                    "/images/stamp/stamp035.png",
+                    "stamp035",
                     "http://pic.twitter.com/XiMVmrDUWp"
             }, {
-                    "/images/stamp/stamp036.png",
+                    "stamp036",
                     "http://pic.twitter.com/hXcB5g6Ygq"
             }, {
-                    "/images/stamp/stamp037.png",
+                    "stamp037",
                     "http://pic.twitter.com/XWopb3cOts"
             }, {
-                    "/images/stamp/stamp038.png",
+                    "stamp038",
                     "http://pic.twitter.com/E9kjtoqJRR"
             }, {
-                    "/images/stamp/stamp039.png",
+                    "stamp039",
                     "http://pic.twitter.com/CQkpQ8Altc"
             }, {
-                    "/images/stamp/stamp040.png",
+                    "stamp040",
                     "http://pic.twitter.com/sA362F6rix"
             }, {
-                    "/images/stamp/stamp041.png",
+                    "stamp041",
                     "http://pic.twitter.com/Gg4ehjqB97"
             }, {
-                    "/images/stamp/stamp042.png",
+                    "stamp042",
                     "http://pic.twitter.com/i0LrCSSpzB"
             }, {
-                    "/images/stamp/stamp043.png",
+                    "stamp043",
                     "http://pic.twitter.com/YaskkVfYyo"
             }, {
-                    "/images/stamp/stamp044.png",
+                    "stamp044",
                     "http://pic.twitter.com/Hg3WV1gKNj"
             }, {
-                    "/images/stamp/stamp045.png",
+                    "stamp045",
                     "http://pic.twitter.com/e2idANGP7m"
             }, {
-                    "/images/stamp/stamp046.png",
+                    "stamp046",
                     "http://pic.twitter.com/8ai4ePmRbt"
             }, {
-                    "/images/stamp/stamp047.png",
+                    "stamp047",
                     "http://pic.twitter.com/b8eOJc3rdn"
             }, {
-                    "/images/stamp/stamp048.png",
+                    "stamp048",
                     "http://pic.twitter.com/VHKZpeN8eU"
             }, {
-                    "/images/stamp/stamp049.png",
+                    "stamp049",
                     "http://pic.twitter.com/42hJHOGPHm"
             }, {
-                    "/images/stamp/stamp050.png",
+                    "stamp050",
                     "http://pic.twitter.com/arr2ECWUtM"
             }, {
-                    "/images/stamp/stamp051.png",
+                    "stamp051",
                     "http://pic.twitter.com/LUKtLqZeve"
             }, {
-                    "/images/stamp/stamp052.png",
+                    "stamp052",
                     "http://pic.twitter.com/v7l5tGeSdq"
             }, {
-                    "/images/stamp/stamp053.png",
+                    "stamp053",
                     "http://pic.twitter.com/uWYAxKQpmF"
             }, {
-                    "/images/stamp/stamp054.png",
+                    "stamp054",
                     "http://pic.twitter.com/a1O9gQjnx6"
             }
             };
 
             for (String[] item : list) {
-                item[0] = "http://mouneyou.rgx6.com/" + item[0];
+                item[0] = "http://mouneyou.rgx6.com/images/stamp/" + item[0] + ".png";
             }
             return list;
         }
