@@ -17,10 +17,8 @@ import java.io.InputStreamReader;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
-import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * Created by shule517 on 2015/09/27.
@@ -32,27 +30,17 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
     String text;
     Activity context;
     Bitmap bitmap;
+    Twitter twitter;
 
-    TweetTask(String text, Activity context, Bitmap bitmap) {
+    TweetTask(String text, Activity context, Bitmap bitmap, Twitter twitter) {
         this.text = text;
         this.context = context;
         this.bitmap = bitmap;
+        this.twitter = twitter;
     }
 
-    private void tweet() {
+    private Boolean tweet() {
         try {
-
-            ConfigurationBuilder cb = new ConfigurationBuilder();
-            cb.setDebugEnabled(true)
-                    .setOAuthConsumerKey("wgrDtnR6zi3sv2d6m6k3C9olS")
-                    .setOAuthConsumerSecret("mZGlg1tOgElsoX4Ge7ymZzGlMaj2IRG8l3pWsxGQYVU0ECYKAZ")
-                    .setOAuthAccessToken("67637197-6Em5LcQ197vANf1UQ1PpDvoKpIF83CImN2lozKDDz")
-                    .setOAuthAccessTokenSecret("IT27ijIQNk7Rzz2kWfvmfxTQBSZ5QtidnqDBBxhkxQqy4");
-            TwitterFactory tf = new TwitterFactory(cb.build());
-            Twitter twitter = tf.getInstance();
-
-            // Twitter twitter = new TwitterFactory().getInstance();
-
             try {
                 // get request token.
                 // this will throw IllegalStateException if access token is already available
@@ -89,35 +77,34 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
                 // access token is already available, or consumer key/secret is not set.
                 if (!twitter.getAuthorization().isEnabled()) {
                     System.out.println("OAuth consumer key/secret is not set.");
-                    //System.exit(-1);
+                    return false;
                 }
             }
             twitter4j.Status status = twitter.updateStatus(text);
             System.out.println("Successfully updated the status to [" + status.getText() + "].");
-            //System.exit(0);
+            return true;
         } catch (TwitterException te) {
             te.printStackTrace();
             System.out.println("Failed to get timeline: " + te.getMessage());
-            //System.exit(-1);
+            return false;
         } catch (IOException ioe) {
             ioe.printStackTrace();
             System.out.println("Failed to read the system input.");
-            //System.exit(-1);
+            return false;
         }
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
-        tweet();
-        return true;
+        return tweet();
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
-        /*
-        ImageView imageView = new ImageView(this.context);
-        imageView.setImageBitmap(bitmap);
-        */
+        if (!result) {
+            Toast.makeText(this.context, "ツイートに失敗しました。", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.activity_tweeted, null);

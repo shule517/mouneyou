@@ -50,6 +50,8 @@ public class CallBackActivity extends AppCompatActivity {
 
                 @Override
                 protected void onPostExecute(Boolean result) {
+                    MainActivity.AuthTwitter(token.getToken(), token.getTokenSecret());
+
                     // Tokenを保存
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.context);
                     sp.edit().putString("Token", token.getToken()).commit();

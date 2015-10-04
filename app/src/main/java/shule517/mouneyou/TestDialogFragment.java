@@ -11,18 +11,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import twitter4j.Twitter;
+
 /**
  * Created by shule517 on 2015/09/28.
  */
 public class TestDialogFragment extends DialogFragment implements View.OnClickListener {
-    ListItem stampImage;
-    TextView textView;
+    private ListItem stampImage;
+    private TextView textView;
+    private Twitter twitter;
+    private StampDynamicAdapter adapter;
+    private int position;
 
     public TestDialogFragment() {
     }
 
-    public TestDialogFragment(ListItem stampImage) {
+    public TestDialogFragment(ListItem stampImage, Twitter twitter, StampDynamicAdapter adapter, int position) {
         this.stampImage = stampImage;
+        this.twitter = twitter;
+        this.adapter = adapter;
+        this.position = position;
     }
 
     @Override
@@ -58,6 +66,9 @@ public class TestDialogFragment extends DialogFragment implements View.OnClickLi
     public void onClick(View v) {
         tweet();
         dismiss();
+
+        // ツイートしたスタンプを左上に移動
+        adapter.reorderItems(position, 0);
     }
 
     public void tweet() {
@@ -66,7 +77,7 @@ public class TestDialogFragment extends DialogFragment implements View.OnClickLi
             comment += "\n";
         }
         String text = String.format("%s%s http://mouneyou.rgx6.com/ #てゆうかもう寝よう #すたンプ", comment, stampImage.getSrcUrl());
-        TweetTask task = new TweetTask(text, getActivity(), this.stampImage.getBitmap());
+        TweetTask task = new TweetTask(text, getActivity(), this.stampImage.getBitmap(), this.twitter);
         task.execute();
 
         /*

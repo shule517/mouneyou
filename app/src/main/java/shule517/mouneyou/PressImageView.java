@@ -28,7 +28,7 @@ public class PressImageView extends ImageView {
 
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                setColorFilter(Color.argb(100, 0, 0, 0));//Alpha100 Black Filter
+                setColorFilter(Color.argb(100, 0, 0, 0)); // Alpha100 Black Filter
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
@@ -39,10 +39,4 @@ public class PressImageView extends ImageView {
 
         return true;
     }
-
-    /*
-    public PressImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-    */
 }

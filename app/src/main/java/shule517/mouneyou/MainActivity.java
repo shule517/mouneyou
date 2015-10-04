@@ -15,12 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
+
+import org.askerov.dynamicgrid.DynamicGridView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.OAuthAuthorization;
 import twitter4j.auth.RequestToken;
@@ -29,11 +32,13 @@ import twitter4j.conf.ConfigurationContext;
 
 public class MainActivity extends AppCompatActivity {
 
-    private GridView gridView;
-    List<ListItem> list;
+    private DynamicGridView gridView;
+    private StampDynamicAdapter adapter;
+    private List<ListItem> list;
 
     public static RequestToken _req = null;
     public static OAuthAuthorization _oauth = null;
+    public static Twitter twitter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     String tokenSecret = sp.getString("TokenSecret", "");
 
                     if (token.length() > 0 && tokenSecret.length() > 0) {
-                        _oauth.setOAuthAccessToken(new AccessToken(token, tokenSecret));
+                        AuthTwitter(token, tokenSecret);
                     } else {
                         //アプリの認証オブジェクト作成
                         try {
@@ -276,21 +281,63 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         manager.notify(0, notification);
 
-        // adapterのインスタンスを作成
-        ImageArrayAdapter adapter = new ImageArrayAdapter(this, R.layout.list_view_image_item, list);
-
-        gridView = (GridView) findViewById(R.id.listview);
+        // スタンプ一覧Gridの設定
+        gridView = (DynamicGridView) findViewById(R.id.listview);
+        adapter = new StampDynamicAdapter(this, list, 4);
         gridView.setAdapter(adapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ListItem item = list.get(position);
+        // スタンプ長押しで並び替え
+        gridView.setOnDragListener(new DynamicGridView.OnDragListener() {
+            @Override
+            public void onDragStarted(int position) {
+                Log.d("GridView", "drag started at position " + position);
+            }
 
-                // ダイアログを表示する
-                DialogFragment newFragment = new TestDialogFragment(item);
-                newFragment.show(getFragmentManager(), "test tweet!!");
+            @Override
+            public void onDragPositionsChanged(int oldPosition, int newPosition) {
+                Log.d("GridView", String.format("drag item position changed from %d to %d", oldPosition, newPosition));
             }
         });
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                gridView.startEditMode(position);
+                return true;
+            }
+        });
+
+        // スタンプタップでツイート画面を表示
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListItem item = (ListItem) adapter.getItem(position);
+                DialogFragment newFragment = new TestDialogFragment(item, twitter, adapter, position);
+                newFragment.show(getFragmentManager(), "");
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (gridView.isEditMode()) {
+            gridView.stopEditMode();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // Twitter認証
+    public static void AuthTwitter(String token, String tokenSecret) {
+        AccessToken accessToken = new AccessToken(token, tokenSecret);
+
+        //twitterオブジェクトの作成
+        twitter = new TwitterFactory().getInstance();
+
+        //Consumer keyとConsumer key seacretの設定
+        twitter.setOAuthConsumer("wgrDtnR6zi3sv2d6m6k3C9olS", "mZGlg1tOgElsoX4Ge7ymZzGlMaj2IRG8l3pWsxGQYVU0ECYKAZ");
+
+        //AccessTokenオブジェクトを設定
+        twitter.setOAuthAccessToken(accessToken);
     }
 
     /*
