@@ -3,11 +3,15 @@ package shule517.mouneyou;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +32,14 @@ public
 class TweetTask extends AsyncTask<String, Void, Boolean> {
 
     String text;
+    String comment;
     Activity context;
     Bitmap bitmap;
     Twitter twitter;
 
-    TweetTask(String text, Activity context, Bitmap bitmap, Twitter twitter) {
+    TweetTask(String text, String comment, Activity context, Bitmap bitmap, Twitter twitter) {
         this.text = text;
+        this.comment = comment;
         this.context = context;
         this.bitmap = bitmap;
         this.twitter = twitter;
@@ -112,6 +118,27 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
         // スタンプ画像を設定
         ImageView stampImage = (ImageView) view.findViewById(R.id.stampImage);
         stampImage.setImageBitmap(this.bitmap);
+
+        // 画面サイズを取得する
+        Display disp = this.context.getWindowManager().getDefaultDisplay();
+
+        // 画面の幅(Pixel)÷画像ファイルの幅(Pixel)＝画面いっぱいに表示する場合の倍率
+        float factor = (disp.getWidth() / this.bitmap.getWidth());
+
+        // 表示サイズ(Pixel)を指定して、LayoutParamsを生成(ImageViewはこのサイズになる)
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                (int) (this.bitmap.getWidth() * factor), (int) (this.bitmap.getHeight() * factor));
+        // 中央に表示する
+        lp.gravity = Gravity.CENTER;
+
+        // LayoutParamsをImageViewに設定
+        stampImage.setLayoutParams(lp);
+
+        // ImageViewのMatrixに拡大率を指定
+        Matrix m = stampImage.getImageMatrix();
+        m.reset();
+        m.postScale(factor, factor);
+        stampImage.setImageMatrix(m);
 
         // ツイート内容を設定
         TextView tweetText = (TextView) view.findViewById(R.id.tweetText);

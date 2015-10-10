@@ -89,8 +89,8 @@ public class TweetDialogFragment extends DialogFragment implements View.OnClickL
         if (comment.length() > 0) {
             comment += "\n";
         }
-        String text = String.format("%s%s http://mouneyou.rgx6.com/ #てゆうかもう寝よう #すたンプ", comment, stampImage.getSrcUrl());
-        TweetTask task = new TweetTask(text, getActivity(), this.stampImage.getBitmap(), this.twitter);
+        String text = String.format("%s#てゆうかもう寝よう\n#すたンプ\nhttp://mouneyou.rgx6.com/\n%s", comment, stampImage.getSrcUrl());
+        TweetTask task = new TweetTask(text, textView.getText().toString(), getActivity(), this.stampImage.getBitmap(), this.twitter);
         task.execute();
     }
 }

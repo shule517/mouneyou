@@ -32,12 +32,14 @@ import twitter4j.conf.ConfigurationContext;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String ConsumerKey = "wgrDtnR6zi3sv2d6m6k3C9olS";
+    public static final String ConsumerSecret = "mZGlg1tOgElsoX4Ge7ymZzGlMaj2IRG8l3pWsxGQYVU0ECYKAZ";
     private DynamicGridView gridView;
     private StampGridAdapter adapter;
     private List<StampGridItem> list;
 
-    public static RequestToken _req = null;
-    public static OAuthAuthorization _oauth = null;
+    public static RequestToken requestToken = null;
+    public static OAuthAuthorization oauth = null;
     public static Twitter twitter = null;
 
     @Override
@@ -56,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
                     Configuration conf = ConfigurationContext.getInstance();
 
                     //Oauth認証オブジェクト作成
-                    _oauth = new OAuthAuthorization(conf);
+                    oauth = new OAuthAuthorization(conf);
                     //Oauth認証オブジェクトにconsumerKeyとconsumerSecretを設定
-                    _oauth.setOAuthConsumer("wgrDtnR6zi3sv2d6m6k3C9olS", "mZGlg1tOgElsoX4Ge7ymZzGlMaj2IRG8l3pWsxGQYVU0ECYKAZ");
+                    oauth.setOAuthConsumer(ConsumerKey, ConsumerSecret);
 
                     // Tokenの取得
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(params[0]);
@@ -70,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         //アプリの認証オブジェクト作成
                         try {
-                            _req = _oauth.getOAuthRequestToken("mouneyou://oauth");
+                            requestToken = oauth.getOAuthRequestToken("mouneyou://oauth");
                         } catch (TwitterException e) {
                             e.printStackTrace();
                         }
-                        String _uri;
-                        _uri = _req.getAuthorizationURL();
-                        startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse(_uri)), 0);
+                        String uri;
+                        uri = requestToken.getAuthorizationURL();
+                        startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)), 0);
                     }
                 } catch (Exception ex) {
                     Log.e("twitter", ex.toString());
@@ -274,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         twitter = new TwitterFactory().getInstance();
 
         //Consumer keyとConsumer key seacretの設定
-        twitter.setOAuthConsumer("wgrDtnR6zi3sv2d6m6k3C9olS", "mZGlg1tOgElsoX4Ge7ymZzGlMaj2IRG8l3pWsxGQYVU0ECYKAZ");
+        twitter.setOAuthConsumer(ConsumerKey, ConsumerSecret);
 
         //AccessTokenオブジェクトを設定
         twitter.setOAuthAccessToken(accessToken);

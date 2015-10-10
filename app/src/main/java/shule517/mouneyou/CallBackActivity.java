@@ -41,7 +41,7 @@ public class CallBackActivity extends AppCompatActivity {
                     this.context = params[0];
                     //AccessTokenオブジェクトを取得
                     try {
-                        token = MainActivity._oauth.getOAuthAccessToken(MainActivity._req, verifier);
+                        token = MainActivity.oauth.getOAuthAccessToken(MainActivity.requestToken, verifier);
                     } catch (TwitterException e) {
                         e.printStackTrace();
                     }
