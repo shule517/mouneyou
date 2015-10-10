@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * Created by shule517 on 2015/10/04.
  */
-public class StampDynamicAdapter extends BaseDynamicGridAdapter {
-    public StampDynamicAdapter(Context context, List<?> items, int columnCount) {
+public class StampGridAdapter extends BaseDynamicGridAdapter {
+    public StampGridAdapter(Context context, List<?> items, int columnCount) {
         super(context, items, columnCount);
     }
 
@@ -28,7 +28,7 @@ public class StampDynamicAdapter extends BaseDynamicGridAdapter {
         } else {
             holder = (StampViewHolder) convertView.getTag();
         }
-        holder.build((ListItem) getItem(position));
+        holder.build((StampGridItem) getItem(position));
 
         return convertView;
     }
@@ -42,7 +42,7 @@ public class StampDynamicAdapter extends BaseDynamicGridAdapter {
             this.view = view;
         }
 
-        void build(ListItem item) {
+        void build(StampGridItem item) {
             // アイコンをセット
             String imageUrl = item.getImageUrl();
 

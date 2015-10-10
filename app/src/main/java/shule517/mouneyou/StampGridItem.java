@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 /**
  * Created by shule517 on 2015/08/25.
  */
-public class ListItem {
+public class StampGridItem {
     private int imageId;
     private String imageUrl;
     private Bitmap bitmap;

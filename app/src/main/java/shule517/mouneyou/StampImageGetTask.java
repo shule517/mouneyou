@@ -20,10 +20,10 @@ public
 class StampImageGetTask extends AsyncTask<String, Void, Bitmap> {
     private ImageView image;
     private String imageUrl;
-    private ListItem item;
+    private StampGridItem item;
     private Context context;
 
-    public StampImageGetTask(Context context, ImageView image, ListItem item) {
+    public StampImageGetTask(Context context, ImageView image, StampGridItem item) {
         this.context = context;
         this.image = image;
         this.imageUrl = image.getTag().toString();

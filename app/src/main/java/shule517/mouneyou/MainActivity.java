@@ -33,8 +33,8 @@ import twitter4j.conf.ConfigurationContext;
 public class MainActivity extends AppCompatActivity {
 
     private DynamicGridView gridView;
-    private StampDynamicAdapter adapter;
-    private List<ListItem> list;
+    private StampGridAdapter adapter;
+    private List<StampGridItem> list;
 
     public static RequestToken _req = null;
     public static OAuthAuthorization _oauth = null;
@@ -91,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
         };
         task.execute(this);
 
-        list = new ArrayList<ListItem>();
+        list = new ArrayList<StampGridItem>();
 
         List<String[]> stringList = loadStampSettings();
 
         for (String[] str : stringList) {
-            ListItem item = new ListItem();
+            StampGridItem item = new StampGridItem();
             item.setImageUrl(str[0]);
             item.setSrcUrl(str[1]);
             item.setImageId(R.drawable.sta);
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         // スタンプ一覧Gridの設定
         gridView = (DynamicGridView) findViewById(R.id.listview);
         gridView.setClipToPadding(false);
-        adapter = new StampDynamicAdapter(this, list, 4);
+        adapter = new StampGridAdapter(this, list, 4);
         gridView.setAdapter(adapter);
 
         // スタンプ長押しで並び替え
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ListItem item = (ListItem) adapter.getItem(position);
+                StampGridItem item = (StampGridItem) adapter.getItem(position);
                 TweetDialogFragment newFragment = new TweetDialogFragment();
                 newFragment.setDialogFragment(item, twitter, adapter, position);
                 newFragment.show(getFragmentManager(), "");
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("stamp_count", adapter.getCount());
             // 画像URLの保存
             for (int i = 0; i < adapter.getCount(); i++) {
-                ListItem item = (ListItem) adapter.getItem(i);
+                StampGridItem item = (StampGridItem) adapter.getItem(i);
                 editor.putString("stamp" + i + "_imageurl", item.getImageUrl());
                 editor.putString("stamp" + i + "_srcurl", item.getSrcUrl());
             }

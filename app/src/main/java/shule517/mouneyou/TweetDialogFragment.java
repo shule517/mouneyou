@@ -19,16 +19,16 @@ import twitter4j.Twitter;
  * Created by shule517 on 2015/09/28.
  */
 public class TweetDialogFragment extends DialogFragment implements View.OnClickListener {
-    private ListItem stampImage;
+    private StampGridItem stampImage;
     private TextView textView;
     private Twitter twitter;
-    private StampDynamicAdapter adapter;
+    private StampGridAdapter adapter;
     private int position;
 
     public TweetDialogFragment() {
     }
 
-    public void setDialogFragment(ListItem stampImage, Twitter twitter, StampDynamicAdapter adapter, int position) {
+    public void setDialogFragment(StampGridItem stampImage, Twitter twitter, StampGridAdapter adapter, int position) {
         this.stampImage = stampImage;
         this.twitter = twitter;
         this.adapter = adapter;
@@ -77,7 +77,7 @@ public class TweetDialogFragment extends DialogFragment implements View.OnClickL
         editor.putInt("stamp_count", adapter.getCount());
         // 画像URLの保存
         for (int i = 0; i < adapter.getCount(); i++) {
-            ListItem item = (ListItem) adapter.getItem(i);
+            StampGridItem item = (StampGridItem) adapter.getItem(i);
             editor.putString("stamp" + i + "_imageurl", item.getImageUrl());
             editor.putString("stamp" + i + "_srcurl", item.getSrcUrl());
         }
