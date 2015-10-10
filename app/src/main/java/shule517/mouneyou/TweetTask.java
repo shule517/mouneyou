@@ -123,7 +123,7 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
         Display disp = this.context.getWindowManager().getDefaultDisplay();
 
         // 画面の幅(Pixel)÷画像ファイルの幅(Pixel)＝画面いっぱいに表示する場合の倍率
-        float factor = (disp.getWidth() / this.bitmap.getWidth());
+        float factor = (disp.getWidth() / this.bitmap.getWidth()) * 0.8f;
 
         // 表示サイズ(Pixel)を指定して、LayoutParamsを生成(ImageViewはこのサイズになる)
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(

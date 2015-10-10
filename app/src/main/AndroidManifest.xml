@@ -24,17 +24,13 @@
         <activity
             android:name=".CallBackActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="oauth"
-                    android:scheme="mouneyou" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="mouneyou"
+                    android:host="CallBackActivity"/>
             </intent-filter>
         </activity>
     </application>

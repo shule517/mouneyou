@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         //アプリの認証オブジェクト作成
                         try {
-                            requestToken = oauth.getOAuthRequestToken("mouneyou://oauth");
+                            requestToken = oauth.getOAuthRequestToken("mouneyou://CallBackActivity");
                         } catch (TwitterException e) {
                             e.printStackTrace();
                         }
