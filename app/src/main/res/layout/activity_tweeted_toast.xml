@@ -7,28 +7,31 @@
     android:padding="16dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ツイートしました！"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:gravity="center" />
 
     <ImageView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/stampImage"
         android:src="@drawable/sta"
         android:padding="16dp"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:scaleType="matrix"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:text="ツイート内容"
         android:id="@+id/tweetText"
         android:textAlignment="center"
         android:textIsSelectable="false"
         android:autoText="false"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>
