@@ -1,6 +1,5 @@
 package shule517.mouneyou;
 
-import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         list = new ArrayList<ListItem>();
 
-        String[][] stringList = loadStampSettings();
+        List<String[]> stringList = loadStampSettings();
 
         for (String[] str : stringList) {
             ListItem item = new ListItem();
@@ -119,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         // スタンプ一覧Gridの設定
         gridView = (DynamicGridView) findViewById(R.id.listview);
+        gridView.setClipToPadding(false);
         adapter = new StampDynamicAdapter(this, list, 4);
         gridView.setAdapter(adapter);
 
@@ -147,14 +147,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ListItem item = (ListItem) adapter.getItem(position);
-                DialogFragment newFragment = new TestDialogFragment(item, twitter, adapter, position);
+                TestDialogFragment newFragment = new TestDialogFragment();
+                newFragment.setDialogFragment(item, twitter, adapter, position);
                 newFragment.show(getFragmentManager(), "");
             }
         });
     }
 
     @NonNull
-    private String[][] loadStampSettings() {
+    private List<String[]> loadStampSettings() {
 
         // Tokenの取得
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -162,185 +163,84 @@ public class MainActivity extends AppCompatActivity {
         int stampCount = sp.getInt("stamp_count", 0);
 
         if (stampCount != 0) {
-            String[][] list = new String[stampCount][2];
+            List<String[]> list = new ArrayList<String[]>();
             for (int i = 0; i < stampCount; i++) {
                 String imageUrl = sp.getString("stamp" + i + "_imageurl", "");
                 String srcUrl = sp.getString("stamp" + i + "_srcurl", "");
                 String[] item = {imageUrl, srcUrl};
-                list[i] = item;
+                list.add(item);
             }
             return list;
         } else {
-
-            String[][] list = new String[][]{
-                    {
-                            "stamp001",
-                            "http://pic.twitter.com/zJf9UxVkCy"
-                    }, {
-                    "stamp002",
-                    "http://pic.twitter.com/gGWnG2T1N2"
-            }, {
-                    "stamp003",
-                    "http://pic.twitter.com/8dnYyZqEoF"
-            }, {
-                    "stamp004",
-                    "http://pic.twitter.com/zjx4PUhbmY"
-            }, {
-                    "stamp005",
-                    "http://pic.twitter.com/kHnGxG95CI"
-            }, {
-                    "stamp006",
-                    "http://pic.twitter.com/SbRtVCDOit"
-            }, {
-                    "stamp007",
-                    "http://pic.twitter.com/zIdqC5MtxE"
-            }, {
-                    "stamp008",
-                    "http://pic.twitter.com/yYZEcqQCGZ"
-            }, {
-                    "stamp009",
-                    "http://pic.twitter.com/dYwZ3axpKW"
-            }, {
-                    "stamp010",
-                    "http://pic.twitter.com/Z0yAX0QcHJ",
-            }, {
-                    "stamp011",
-                    "http://pic.twitter.com/M6I6regjKd",
-            }, {
-                    "stamp012",
-                    "http://pic.twitter.com/Iv8gvPUATM"
-            }, {
-                    "stamp013",
-                    "http://pic.twitter.com/sQOagjwDRJ"
-            }, {
-                    "stamp014",
-                    "http://pic.twitter.com/1iWz6NfP9t"
-            }, {
-                    "stamp015",
-                    "http://pic.twitter.com/tyXVCqpQTc"
-            }, {
-                    "stamp016",
-                    "http://pic.twitter.com/e1CILuyhgc"
-            }, {
-                    "stamp017",
-                    "http://pic.twitter.com/jmUVSC3zXK"
-            }, {
-                    "stamp018",
-                    "http://pic.twitter.com/2pd753IzXC"
-            }, {
-                    "stamp019",
-                    "http://pic.twitter.com/e1B9k2MXgS"
-            }, {
-                    "stamp020",
-                    "http://pic.twitter.com/wGwLC41tdH"
-            }, {
-                    "stamp021",
-                    "http://pic.twitter.com/SYkLTqipqL"
-            }, {
-                    "stamp022",
-                    "http://pic.twitter.com/wb79W80JeH"
-            }, {
-                    "stamp023",
-                    "http://pic.twitter.com/YYwHReTUBS",
-            }, {
-                    "stamp024",
-                    "http://pic.twitter.com/VnmJEufqY2"
-            }, {
-                    "stamp025",
-                    "http://pic.twitter.com/6viZHnOBEn"
-            }, {
-                    "stamp026",
-                    "http://pic.twitter.com/MMDWi2jWHB"
-            }, {
-                    "stamp027",
-                    "http://pic.twitter.com/kDzFQfo6ty"
-            }, {
-                    "stamp028",
-                    "http://pic.twitter.com/cuWqlvgib3"
-            }, {
-                    "stamp029",
-                    "http://pic.twitter.com/RQdFyGXkcv"
-            }, {
-                    "stamp030",
-                    "http://pic.twitter.com/4xZ45MTCNv"
-            }, {
-                    "stamp031",
-                    "http://pic.twitter.com/M1zjqfk8pH"
-            }, {
-                    "stamp032",
-                    "http://pic.twitter.com/agDkVgLd3n"
-            }, {
-                    "stamp033",
-                    "http://pic.twitter.com/3wfkhxsCH1",
-            }, {
-                    "stamp034",
-                    "http://pic.twitter.com/29RqnztSk9"
-            }, {
-                    "stamp035",
-                    "http://pic.twitter.com/XiMVmrDUWp"
-            }, {
-                    "stamp036",
-                    "http://pic.twitter.com/hXcB5g6Ygq"
-            }, {
-                    "stamp037",
-                    "http://pic.twitter.com/XWopb3cOts"
-            }, {
-                    "stamp038",
-                    "http://pic.twitter.com/E9kjtoqJRR"
-            }, {
-                    "stamp039",
-                    "http://pic.twitter.com/CQkpQ8Altc"
-            }, {
-                    "stamp040",
-                    "http://pic.twitter.com/sA362F6rix"
-            }, {
-                    "stamp041",
-                    "http://pic.twitter.com/Gg4ehjqB97"
-            }, {
-                    "stamp042",
-                    "http://pic.twitter.com/i0LrCSSpzB"
-            }, {
-                    "stamp043",
-                    "http://pic.twitter.com/YaskkVfYyo"
-            }, {
-                    "stamp044",
-                    "http://pic.twitter.com/Hg3WV1gKNj"
-            }, {
-                    "stamp045",
-                    "http://pic.twitter.com/e2idANGP7m"
-            }, {
-                    "stamp046",
-                    "http://pic.twitter.com/8ai4ePmRbt"
-            }, {
-                    "stamp047",
-                    "http://pic.twitter.com/b8eOJc3rdn"
-            }, {
-                    "stamp048",
-                    "http://pic.twitter.com/VHKZpeN8eU"
-            }, {
-                    "stamp049",
-                    "http://pic.twitter.com/42hJHOGPHm"
-            }, {
-                    "stamp050",
-                    "http://pic.twitter.com/arr2ECWUtM"
-            }, {
-                    "stamp051",
-                    "http://pic.twitter.com/LUKtLqZeve"
-            }, {
-                    "stamp052",
-                    "http://pic.twitter.com/v7l5tGeSdq"
-            }, {
-                    "stamp053",
-                    "http://pic.twitter.com/uWYAxKQpmF"
-            }, {
-                    "stamp054",
-                    "http://pic.twitter.com/a1O9gQjnx6"
+            /*
+            List<String[]> list = new ArrayList<String[]>();
+            try {
+                SrcGetTask task = new SrcGetTask(list);
+                task.execute("http://mouneyou.rgx6.com/javascripts/client.js");
+                task.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            };
+            */
+            List<String[]> list = new ArrayList<String[]>();
+            list.add(new String[]{"stamp001", "http://pic.twitter.com/zJf9UxVkCy"});
+            list.add(new String[]{"stamp002", "http://pic.twitter.com/gGWnG2T1N2"});
+            list.add(new String[]{"stamp003", "http://pic.twitter.com/8dnYyZqEoF"});
+            list.add(new String[]{"stamp004", "http://pic.twitter.com/zjx4PUhbmY"});
+            list.add(new String[]{"stamp005", "http://pic.twitter.com/kHnGxG95CI"});
+            list.add(new String[]{"stamp006", "http://pic.twitter.com/SbRtVCDOit"});
+            list.add(new String[]{"stamp007", "http://pic.twitter.com/zIdqC5MtxE"});
+            list.add(new String[]{"stamp008", "http://pic.twitter.com/yYZEcqQCGZ"});
+            list.add(new String[]{"stamp009", "http://pic.twitter.com/dYwZ3axpKW"});
+            list.add(new String[]{"stamp010", "http://pic.twitter.com/Z0yAX0QcHJ"});
+            list.add(new String[]{"stamp011", "http://pic.twitter.com/M6I6regjKd"});
+            list.add(new String[]{"stamp012", "http://pic.twitter.com/Iv8gvPUATM"});
+            list.add(new String[]{"stamp013", "http://pic.twitter.com/sQOagjwDRJ"});
+            list.add(new String[]{"stamp014", "http://pic.twitter.com/1iWz6NfP9t"});
+            list.add(new String[]{"stamp015", "http://pic.twitter.com/tyXVCqpQTc"});
+            list.add(new String[]{"stamp016", "http://pic.twitter.com/e1CILuyhgc"});
+            list.add(new String[]{"stamp017", "http://pic.twitter.com/jmUVSC3zXK"});
+            list.add(new String[]{"stamp018", "http://pic.twitter.com/2pd753IzXC"});
+            list.add(new String[]{"stamp019", "http://pic.twitter.com/e1B9k2MXgS"});
+            list.add(new String[]{"stamp020", "http://pic.twitter.com/wGwLC41tdH"});
+            list.add(new String[]{"stamp021", "http://pic.twitter.com/SYkLTqipqL"});
+            list.add(new String[]{"stamp022", "http://pic.twitter.com/wb79W80JeH"});
+            list.add(new String[]{"stamp023", "http://pic.twitter.com/YYwHReTUBS"});
+            list.add(new String[]{"stamp024", "http://pic.twitter.com/VnmJEufqY2"});
+            list.add(new String[]{"stamp025", "http://pic.twitter.com/6viZHnOBEn"});
+            list.add(new String[]{"stamp026", "http://pic.twitter.com/MMDWi2jWHB"});
+            list.add(new String[]{"stamp027", "http://pic.twitter.com/kDzFQfo6ty"});
+            list.add(new String[]{"stamp028", "http://pic.twitter.com/cuWqlvgib3"});
+            list.add(new String[]{"stamp029", "http://pic.twitter.com/RQdFyGXkcv"});
+            list.add(new String[]{"stamp030", "http://pic.twitter.com/4xZ45MTCNv"});
+            list.add(new String[]{"stamp031", "http://pic.twitter.com/M1zjqfk8pH"});
+            list.add(new String[]{"stamp032", "http://pic.twitter.com/agDkVgLd3n"});
+            list.add(new String[]{"stamp033", "http://pic.twitter.com/3wfkhxsCH1"});
+            list.add(new String[]{"stamp034", "http://pic.twitter.com/29RqnztSk9"});
+            list.add(new String[]{"stamp035", "http://pic.twitter.com/XiMVmrDUWp"});
+            list.add(new String[]{"stamp036", "http://pic.twitter.com/hXcB5g6Ygq"});
+            list.add(new String[]{"stamp037", "http://pic.twitter.com/XWopb3cOts"});
+            list.add(new String[]{"stamp038", "http://pic.twitter.com/E9kjtoqJRR"});
+            list.add(new String[]{"stamp039", "http://pic.twitter.com/CQkpQ8Altc"});
+            list.add(new String[]{"stamp040", "http://pic.twitter.com/sA362F6rix"});
+            list.add(new String[]{"stamp041", "http://pic.twitter.com/Gg4ehjqB97"});
+            list.add(new String[]{"stamp042", "http://pic.twitter.com/i0LrCSSpzB"});
+            list.add(new String[]{"stamp043", "http://pic.twitter.com/YaskkVfYyo"});
+            list.add(new String[]{"stamp044", "http://pic.twitter.com/Hg3WV1gKNj"});
+            list.add(new String[]{"stamp045", "http://pic.twitter.com/e2idANGP7m"});
+            list.add(new String[]{"stamp046", "http://pic.twitter.com/8ai4ePmRbt"});
+            list.add(new String[]{"stamp048", "http://pic.twitter.com/VHKZpeN8eU"});
+            list.add(new String[]{"stamp049", "http://pic.twitter.com/42hJHOGPHm"});
+            list.add(new String[]{"stamp050", "http://pic.twitter.com/arr2ECWUtM"});
+            list.add(new String[]{"stamp051", "http://pic.twitter.com/LUKtLqZeve"});
+            list.add(new String[]{"stamp052", "http://pic.twitter.com/v7l5tGeSdq"});
+            list.add(new String[]{"stamp053", "http://pic.twitter.com/uWYAxKQpmF"});
+            list.add(new String[]{"stamp054", "http://pic.twitter.com/a1O9gQjnx6"});
 
             for (String[] item : list) {
                 item[0] = "http://mouneyou.rgx6.com/images/stamp/" + item[0] + ".png";
             }
+
             return list;
         }
     }

@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +28,7 @@ public class TestDialogFragment extends DialogFragment implements View.OnClickLi
     public TestDialogFragment() {
     }
 
-    public TestDialogFragment(ListItem stampImage, Twitter twitter, StampDynamicAdapter adapter, int position) {
+    public void setDialogFragment(ListItem stampImage, Twitter twitter, StampDynamicAdapter adapter, int position) {
         this.stampImage = stampImage;
         this.twitter = twitter;
         this.adapter = adapter;
@@ -69,6 +71,17 @@ public class TestDialogFragment extends DialogFragment implements View.OnClickLi
 
         // ツイートしたスタンプを左上に移動
         adapter.reorderItems(position, 0);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sp.edit();        // スタンプ数の保存
+        editor.putInt("stamp_count", adapter.getCount());
+        // 画像URLの保存
+        for (int i = 0; i < adapter.getCount(); i++) {
+            ListItem item = (ListItem) adapter.getItem(i);
+            editor.putString("stamp" + i + "_imageurl", item.getImageUrl());
+            editor.putString("stamp" + i + "_srcurl", item.getSrcUrl());
+        }
+        editor.commit();
     }
 
     public void tweet() {
@@ -79,14 +92,5 @@ public class TestDialogFragment extends DialogFragment implements View.OnClickLi
         String text = String.format("%s%s http://mouneyou.rgx6.com/ #てゆうかもう寝よう #すたンプ", comment, stampImage.getSrcUrl());
         TweetTask task = new TweetTask(text, getActivity(), this.stampImage.getBitmap(), this.twitter);
         task.execute();
-
-        /*
-        String text = Uri.encode(textView.getText().toString() + "\n");
-        String tag = Uri.encode("#てゆうかもう寝よう #すたンプ");
-        String intentUrl = String.format("twitter.com/intent/tweet?lang=ja&text=%s%s http://mouneyou.rgx6.com/ %s", text, stampImage.getSrcUrl(), tag);
-        Uri uri = Uri.parse("https://" + intentUrl);
-        Intent i = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(i);
-        */
     }
 }
