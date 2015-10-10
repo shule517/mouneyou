@@ -107,7 +107,7 @@ class TweetTask extends AsyncTask<String, Void, Boolean> {
         }
 
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.activity_tweeted, null);
+        View view = inflater.inflate(R.layout.activity_tweeted_toast, null);
 
         // スタンプ画像を設定
         ImageView stampImage = (ImageView) view.findViewById(R.id.stampImage);

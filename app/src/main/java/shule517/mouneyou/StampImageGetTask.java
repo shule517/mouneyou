@@ -17,13 +17,13 @@ import java.net.URL;
  */
 public
 // Image取得用スレッドクラス
-class ImageGetTask extends AsyncTask<String, Void, Bitmap> {
+class StampImageGetTask extends AsyncTask<String, Void, Bitmap> {
     private ImageView image;
     private String imageUrl;
     private ListItem item;
     private Context context;
 
-    public ImageGetTask(Context context, ImageView image, ListItem item) {
+    public StampImageGetTask(Context context, ImageView image, ListItem item) {
         this.context = context;
         this.image = image;
         this.imageUrl = image.getTag().toString();

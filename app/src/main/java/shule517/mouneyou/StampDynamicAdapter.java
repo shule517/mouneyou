@@ -52,7 +52,7 @@ public class StampDynamicAdapter extends BaseDynamicGridAdapter {
                 image.setTag(imageUrl);
 
                 // 画像取得スレッド起動
-                ImageGetTask task = new ImageGetTask(view.getContext(), image, item);
+                StampImageGetTask task = new StampImageGetTask(view.getContext(), image, item);
                 task.execute(imageUrl);
             } else {
                 // 取得済みのBitmapを設定

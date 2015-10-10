@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ListItem item = (ListItem) adapter.getItem(position);
-                TestDialogFragment newFragment = new TestDialogFragment();
+                TweetDialogFragment newFragment = new TweetDialogFragment();
                 newFragment.setDialogFragment(item, twitter, adapter, position);
                 newFragment.show(getFragmentManager(), "");
             }

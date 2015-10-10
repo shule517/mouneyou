@@ -18,14 +18,14 @@ import twitter4j.Twitter;
 /**
  * Created by shule517 on 2015/09/28.
  */
-public class TestDialogFragment extends DialogFragment implements View.OnClickListener {
+public class TweetDialogFragment extends DialogFragment implements View.OnClickListener {
     private ListItem stampImage;
     private TextView textView;
     private Twitter twitter;
     private StampDynamicAdapter adapter;
     private int position;
 
-    public TestDialogFragment() {
+    public TweetDialogFragment() {
     }
 
     public void setDialogFragment(ListItem stampImage, Twitter twitter, StampDynamicAdapter adapter, int position) {
