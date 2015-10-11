@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/corner_round_border"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="fill_parent"
@@ -16,15 +17,15 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/stampImage"
         android:src="@drawable/sta"
         android:padding="16dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center_horizontal"
-        android:maxHeight="300dp"
-        android:maxWidth="300dp" />
+        android:maxHeight="200dp"
+        android:maxWidth="200dp" />
 
     <TextView
         android:layout_width="fill_parent"
